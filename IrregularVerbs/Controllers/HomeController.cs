@@ -20,7 +20,7 @@ namespace IrregularVerbs.Controllers
         private readonly IVerbRepository _verbRepository;
         private readonly IrregularVerbsContext _context;
         private static List<int> selectedVerbs = new List<int>();
-        private int verbsLeft = 1;
+        private int verbsLeft;
         private static Random random = new Random();
 
         public HomeController(ILogger<HomeController> logger, IWebHostEnvironment hostEnvironment, IVerbRepository verbRepository, IrregularVerbsContext context)
@@ -83,10 +83,7 @@ namespace IrregularVerbs.Controllers
 
             var verb = _verbRepository.GetVerb(_context.Irregulars.Find(selected), verbsLeft);
 
-            if (verbsLeft < 0)
-                return RedirectToAction("Index");
-            else
-                return View(verb);
+            return View(verb);
         }
 
         [HttpPost]
@@ -95,7 +92,7 @@ namespace IrregularVerbs.Controllers
             string getDate = HttpContext.Session.GetString("Date");
             DateTime TimeStamp = DateTime.Parse(getDate);
 
-            if (submit.VerbsLeft < 0)
+            if (submit.VerbsLeft <= 0)
                 return RedirectToAction("Index");
             else
                 _verbRepository.CheckSubmittedForm(TimeStamp, submit);
