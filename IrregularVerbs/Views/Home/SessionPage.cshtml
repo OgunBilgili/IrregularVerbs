@@ -1,41 +1,42 @@
 ﻿@model SubmitForm;
 
+<div class="border border-success border-3 rounded-3">
+    <form enctype="multipart/form-data" asp-controller="Home" asp-action="CheckSubmit" method="post" class="md-3">
 
-<form enctype="multipart/form-data" asp-controller="Home" asp-action="CheckSubmit" method="post" class="mt-3">
+        <div asp-validation-summary="All" class="text-danger"></div>
 
-    <div asp-validation-summary="All" class="text-danger"></div>
+        <input hidden asp-for="VerbsLeft" value="@Model.VerbsLeft" />
+        <input hidden asp-for="GivenVerbType" value="@Model.GivenVerbType" />
 
-    <input hidden asp-for="VerbsLeft" value="@Model.VerbsLeft" />
-    <input hidden asp-for="GivenVerbType" value="@Model.GivenVerbType" />
-
-    <div class="form-group row">
-        <label asp-for="BaseForm" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-10">
-            <input asp-for="BaseForm" class="form-control" placeholder="Base Form" value="@Model.BaseForm">
-            <span asp-validation-for="BaseForm" class="text-danger"></span>
+        <div class="form-group row justify-content-sm-center">
+            <label asp-for="BaseForm" class="col-md-2 col-form-label-lg fs-4 fw-bolder">Base Form</label>
+            <div class="col-md-2">
+                <input asp-for="BaseForm" class="form-control-lg" placeholder="Base Form" value="@Model.BaseForm">
+                <span asp-validation-for="BaseForm" class="text-danger"></span>
+            </div>
         </div>
-    </div>
 
-    <div class="form-group row">
-        <label asp-for="PastSimple" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-10">
-            <input asp-for="PastSimple" class="form-control" placeholder="Past Simple" value="@Model.PastSimple">
-            <span asp-validation-for="PastSimple" class="text-danger"></span>
+        <div class="form-group row justify-content-sm-center">
+            <label asp-for="PastSimple" class="col-md-2 col-form-label-lg fs-4 fw-bolder">Past Simple</label>
+            <div class="col-md-2">
+                <input asp-for="PastSimple" class="form-control-lg" placeholder="Past Simple" value="@Model.PastSimple">
+                <span asp-validation-for="PastSimple" class="text-danger"></span>
+            </div>
         </div>
-    </div>
 
-    <div class="form-group row">
-        <label asp-for="PastParticiple" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-10">
-            <input asp-for="PastParticiple" class="form-control" placeholder="Past Participle" value="@Model.PastParticiple">
-            <span asp-validation-for="PastParticiple" class="text-danger"></span>
+        <div class="form-group row justify-content-sm-center">
+            <label asp-for="PastParticiple" class="col-md-2 col-form-label-lg fs-4 fw-bolder">Past Participle</label>
+            <div class="col-md-2">
+                <input asp-for="PastParticiple" class="form-control-lg" placeholder="Past Participle" value="@Model.PastParticiple">
+                <span asp-validation-for="PastParticiple" class="text-danger"></span>
+            </div>
         </div>
-    </div>
 
-    <div class="form-group row">
-        <div class="col-sm-10">
-            <button type="submit" class="btn btn-primary">Submit Answer</button>
+        <div class="form-group row justify-content-sm-center">
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary col-form-label fs-4">Submit Answer</button>
+            </div>
         </div>
-    </div>
 
-</form>
+    </form>
+</div>
