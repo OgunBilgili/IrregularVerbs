@@ -7,11 +7,11 @@
         <p class="fs-2 fw-bolder text-center">WELCOME</p>
     </div>
 
-         <div class="d-grid gap-2 col-6 mx-auto">
-             <a asp-controller="Home" asp-action="SessionPage" class="btn btn-success">START A NEW SESSION</a>
-             <button class="btn btn-info" type="button">GET LATEST RESULTS</button>
-             <button class="btn btn-danger" type="button">CHECK RECENT ERRORS</button>
-         </div>
+    <div class="d-grid gap-2 col-6 mx-auto">
+        <a asp-controller="Home" asp-action="SessionPage" class="btn btn-success">START A NEW SESSION</a>
+        <button class="btn btn-info" type="button">GET LATEST RESULTS</button>
+        <a asp-controller="Home" asp-action="IncorrectPage" class="btn btn-danger">CHECK RECENT ERRORS</a>
+    </div>
 
     <div class="alert alert-success gap-2 col-8 mx-auto" role="alert" style="margin:20px">
         <h4 class="alert-heading">GUIDE</h4>

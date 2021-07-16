@@ -31,6 +31,7 @@ namespace IrregularVerbs.Controllers
             _context = context;
         }
 
+        // Main Web Page
         [Route("~/Home")]
         [Route("~/")]
         public IActionResult Index()
@@ -51,6 +52,7 @@ namespace IrregularVerbs.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        // Training/Test Web Page
         public IActionResult SessionPage()
         {
             if(HttpContext.Session.GetString("Date") == string.Empty)
@@ -86,6 +88,7 @@ namespace IrregularVerbs.Controllers
             return View(verb);
         }
 
+        // Answer Checker
         [HttpPost]
         public IActionResult CheckSubmit(SubmitForm submit)
         {
@@ -98,6 +101,11 @@ namespace IrregularVerbs.Controllers
                 _verbRepository.CheckSubmittedForm(TimeStamp, submit);
 
             return RedirectToAction("SessionPage");
+        }
+
+        public IActionResult IncorrectPage()
+        {
+            return View();
         }
     }
 }
