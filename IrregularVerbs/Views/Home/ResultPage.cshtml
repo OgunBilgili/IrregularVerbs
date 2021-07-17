@@ -11,9 +11,15 @@
     <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.min.js"></script>
 
     <!-- Initialize Data Table Below-->
+    <!-- To do : Double click or select event-->
     <script>
         $(document).ready(function () {
-            $('#ResultsTable').DataTable();
+            var table = $('#ResultsTable').DataTable();
+
+            $('#ResultsTable tbody').on('click', 'tr', function () {
+                var data = table.row(this).data();
+                alert('You clicked on ' + data[0] + '\'s row');
+            });
         });
     </script>
 </head>
