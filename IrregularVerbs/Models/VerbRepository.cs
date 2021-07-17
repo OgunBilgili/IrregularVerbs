@@ -87,37 +87,98 @@ namespace IrregularVerbs.Models
                 correctAnswerFirst = answerKey.BaseForm;
                 correctAnswerSecond = answerKey.PastSimple;
             }
-                
-            //If the submitted form is correct
-            if(answerKey.BaseForm == submit.BaseForm && answerKey.PastSimple == submit.PastSimple && answerKey.PastParticiple == submit.PastParticiple)
-            {
-                Result result = new Result
-                {
-                    TimeStamp = TimeStamp,
-                    NumberofCorrectAnswers = 1,
-                    NumberofIncorrectAnswers = 0,
-                    Accuracy = 1                    
-                };
 
-                _context.Results.Add(result);
-                _context.SaveChanges();
+            var data = _context.Results.Where(x => x.TimeStamp == TimeStamp).FirstOrDefault();
+
+            // Check wheter session's first object added to DB or not.
+            if(data != null)
+            {
+                // If the submitted form is correct
+                if (answerKey.BaseForm == submit.BaseForm && answerKey.PastSimple == submit.PastSimple && answerKey.PastParticiple == submit.PastParticiple)
+                {
+                    data.NumberofCorrectAnswers += 1;
+                }
+                //If the submitted form is Incorrect
+                else
+                {
+                    var incorrect = MakeIncorrectObject(TimeStamp, 0, givenVerb, submittedAnswerFirst, submittedAnswerSecond,
+                                                                            correctAnswerFirst, correctAnswerSecond);
+
+                    data.NumberofIncorrectAnswers += 1;
+
+                    _context.Incorrects.Add(incorrect);
+                }
             }
             else
             {
-                Incorrect incorrect = new Incorrect
+                //If the submitted form is correct
+                if (answerKey.BaseForm == submit.BaseForm && answerKey.PastSimple == submit.PastSimple && answerKey.PastParticiple == submit.PastParticiple)
                 {
-                    TimeStamp = TimeStamp,
-                    Checked = 0,
-                    GivenVerb = givenVerb,
-                    SubmittedAnswerFirst = submittedAnswerFirst,
-                    SubmittedAnswerSecond = submittedAnswerSecond,
-                    CorrectAnswerFirst = correctAnswerFirst,
-                    CorrectAnswerSecond = correctAnswerSecond
-                };
+                    var result = MakeResultObject(TimeStamp, 1, 0, 1);
+                    _context.Results.Add(result);
+                }
+                //If the submitted form is Incorrect
+                else
+                {
+                    var result = MakeResultObject(TimeStamp, 0, 1, 1);
 
-                _context.Incorrects.Add(incorrect);
-                _context.SaveChanges();
+                    var incorrect = MakeIncorrectObject(TimeStamp, 0, givenVerb, submittedAnswerFirst, submittedAnswerSecond, 
+                                                        correctAnswerFirst, correctAnswerSecond);
+
+                    _context.Incorrects.Add(incorrect);
+                    _context.Results.Add(result);
+                }
             }
+
+            // Save changes to DB
+            _context.SaveChanges();
+        }
+
+        public Result MakeResultObject(DateTime? TimeStamp, int? NumberofCorrectAnswers, int? NumberofIncorrectAnswers, int? Accuracy)
+        {
+            Result result = new Result
+            {
+                TimeStamp = TimeStamp,
+                NumberofCorrectAnswers = NumberofCorrectAnswers,
+                NumberofIncorrectAnswers = NumberofIncorrectAnswers,
+                Accuracy = Accuracy
+            };
+
+            return result;
+        }
+            
+        public Incorrect MakeIncorrectObject(DateTime? TimeStamp, int Checked, string givenVerb, string submittedAnswerFirst, string submittedAnswerSecond, 
+                                             string correctAnswerFirst, string correctAnswerSecond)
+        {
+            Incorrect incorrect = new Incorrect
+            {
+                TimeStamp = TimeStamp,
+                Checked = 0,
+                GivenVerb = givenVerb,
+                SubmittedAnswerFirst = submittedAnswerFirst,
+                SubmittedAnswerSecond = submittedAnswerSecond,
+                CorrectAnswerFirst = correctAnswerFirst,
+                CorrectAnswerSecond = correctAnswerSecond
+            };
+
+            return incorrect;
+        }
+
+        // Get Wrong Answers
+        public List<IncorrectForm> GetIncorrectSubmissions()
+        {
+            var data = (from x in _context.Incorrects
+                        select new IncorrectForm
+                        {
+                            TimeStamp = x.TimeStamp,
+                            GivenVerb = x.GivenVerb,
+                            CorrectAnswerFirst = x.CorrectAnswerFirst,
+                            CorrectAnswerSecond = x.CorrectAnswerSecond,
+                            SubmittedAnswerFirst = x.SubmittedAnswerFirst,
+                            SubmittedAnswerSecond = x.SubmittedAnswerSecond,
+                            Checked = x.Checked
+                        }).ToList();
+            return data;
         }
     }
 }

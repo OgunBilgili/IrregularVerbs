@@ -96,16 +96,40 @@ namespace IrregularVerbs.Controllers
             DateTime TimeStamp = DateTime.Parse(getDate);
 
             if (submit.VerbsLeft <= 0)
+            {
+                _verbRepository.CheckSubmittedForm(TimeStamp, submit);
                 return RedirectToAction("Index");
+            }
             else
                 _verbRepository.CheckSubmittedForm(TimeStamp, submit);
 
             return RedirectToAction("SessionPage");
         }
 
+        // Get All Incorrect Results
         public IActionResult IncorrectPage()
+        {
+            var data = _verbRepository.GetIncorrectSubmissions();
+
+            IncorrectForm formData = new IncorrectForm()
+            {
+                IncorrectFormList = data          
+            };
+
+            return View(formData);
+        }
+
+        public IActionResult ResultPage()
         {
             return View();
         }
     }
 }
+
+/*
+    To-Do List
+
+    Result Page -> If clicked : go to incorrect page but distinct the result by TimeStamp
+    
+
+*/
