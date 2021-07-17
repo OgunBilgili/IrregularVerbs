@@ -4,11 +4,11 @@ This is a .net core mvc web application. Currently, I have been developing this 
 General code logic and algorithm efficiency may not be as good as you expected. 
 Ultimately I will have worked on project to make it more efficient.
 
-##Planned Project Features
-- *** Data Tables ***
-- *** Ajax Request *** 
-- *** Basic Entity Framework Core Request ***
-- *** Select Random Entity form Database ***
+## Planned Project Features
+- ***Data Tables***
+- ***Ajax Request*** 
+- ***Basic Entity Framework Core Request***
+- ***Select Random Entity form Database***
 
 
 Feel free to contact: ogunbilgili@gmail.com 
