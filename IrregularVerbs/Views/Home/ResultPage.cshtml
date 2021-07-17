@@ -1,4 +1,4 @@
-﻿
+﻿@model ResultForm;
 
 <!DOCTYPE html>
 <html>
@@ -11,10 +11,37 @@
     <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.min.js"></script>
 
     <!-- Initialize Data Table Below-->
+    <script>
+        $(document).ready(function () {
+            $('#ResultsTable').DataTable();
+        });
+    </script>
 </head>
 
 <body>
-
+    <table id="ResultsTable" class="table table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>TimeStamp</th>
+                <th>NumberofCorrectAnswers</th>
+                <th>NumberofIncorrectAnswers</th>
+                <th>Accuracy</th>
+                <th style="display:none;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var d in Model.ResultFormList)
+            {
+                <tr>
+                    <td id="Numara">@d.TimeStamp</td>
+                    <td>@d.NumberofCorrectAnswers</td>
+                    <td id="İsim">@d.NumberofIncorrectAnswers</td>
+                    <td id="Soyisim">%@d.Accuracy</td>
+                    <td style="display:none;"></td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </body>
-
+    
 </html>

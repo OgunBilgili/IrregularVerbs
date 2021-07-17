@@ -121,7 +121,14 @@ namespace IrregularVerbs.Controllers
 
         public IActionResult ResultPage()
         {
-            return View();
+            var data = _verbRepository.GetResults();
+
+            ResultForm formData = new ResultForm()
+            {
+                ResultFormList = data
+            };
+
+            return View(formData);
         }
     }
 }

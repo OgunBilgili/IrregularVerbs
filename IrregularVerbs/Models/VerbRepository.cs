@@ -16,6 +16,7 @@ namespace IrregularVerbs.Models
             _context = context;
         }
 
+        #region GET RANDOM VERB
         public SubmitForm GetVerb(Irregular verb, int verbsLeft)
         {
             SubmitForm submit = null;
@@ -38,27 +39,15 @@ namespace IrregularVerbs.Models
 
             return submit;
         }
+        #endregion
 
-        public SubmitForm fillSubmission(int VerbsLeft, string GivenVerbType, string BaseForm, string PastSimple, string PastParticiple)
-        {
-            SubmitForm submit = new SubmitForm
-            {
-                VerbsLeft = VerbsLeft,
-                GivenVerbType = GivenVerbType,
-                BaseForm = BaseForm,
-                PastSimple = PastSimple,
-                PastParticiple = PastParticiple
-            };
-
-            return submit;
-        }
-
+        #region CHECK ANSWER
+        // Check User's Submitted Answer
         public void CheckSubmittedForm(DateTime TimeStamp, SubmitForm submit)
         {
             Irregular answerKey = null;
             string givenVerb = string.Empty, submittedAnswerFirst = string.Empty, submittedAnswerSecond = string.Empty,
                     correctAnswerFirst = string.Empty, correctAnswerSecond = string.Empty;
-
             //Get the Answers
             if (submit.GivenVerbType == "BaseForm")
             {
@@ -89,7 +78,6 @@ namespace IrregularVerbs.Models
             }
 
             var data = _context.Results.Where(x => x.TimeStamp == TimeStamp).FirstOrDefault();
-
             // Check wheter session's first object added to DB or not.
             if(data != null)
             {
@@ -103,9 +91,7 @@ namespace IrregularVerbs.Models
                 {
                     var incorrect = MakeIncorrectObject(TimeStamp, 0, givenVerb, submittedAnswerFirst, submittedAnswerSecond,
                                                                             correctAnswerFirst, correctAnswerSecond);
-
                     data.NumberofIncorrectAnswers += 1;
-
                     _context.Incorrects.Add(incorrect);
                 }
             }
@@ -124,14 +110,62 @@ namespace IrregularVerbs.Models
 
                     var incorrect = MakeIncorrectObject(TimeStamp, 0, givenVerb, submittedAnswerFirst, submittedAnswerSecond, 
                                                         correctAnswerFirst, correctAnswerSecond);
-
                     _context.Incorrects.Add(incorrect);
                     _context.Results.Add(result);
                 }
             }
-
             // Save changes to DB
             _context.SaveChanges();
+        }
+        #endregion
+
+        #region GET INCORRECT SUBMISSIONS
+        // Get Wrong Answers
+        public List<IncorrectForm> GetIncorrectSubmissions()
+        {
+            var data = (from x in _context.Incorrects
+                        select new IncorrectForm
+                        {
+                            TimeStamp = x.TimeStamp,
+                            GivenVerb = x.GivenVerb,
+                            CorrectAnswerFirst = x.CorrectAnswerFirst,
+                            CorrectAnswerSecond = x.CorrectAnswerSecond,
+                            SubmittedAnswerFirst = x.SubmittedAnswerFirst,
+                            SubmittedAnswerSecond = x.SubmittedAnswerSecond,
+                            Checked = x.Checked
+                        }).ToList();
+            return data;
+        }
+        #endregion
+
+        #region GET RECENT RESULTS
+        public List<ResultForm> GetResults()
+        {
+            var data = (from x in _context.Results
+                        select new ResultForm
+                        {
+                            TimeStamp = x.TimeStamp,
+                            NumberofCorrectAnswers = x.NumberofCorrectAnswers,
+                            NumberofIncorrectAnswers = x.NumberofIncorrectAnswers,
+                            Accuracy = (100 / (x.NumberofCorrectAnswers + x.NumberofIncorrectAnswers)) * x.NumberofCorrectAnswers
+                        }).ToList();
+            return data;
+        }
+        #endregion
+
+        #region HELPER METHODS
+        public SubmitForm fillSubmission(int VerbsLeft, string GivenVerbType, string BaseForm, string PastSimple, string PastParticiple)
+        {
+            SubmitForm submit = new SubmitForm
+            {
+                VerbsLeft = VerbsLeft,
+                GivenVerbType = GivenVerbType,
+                BaseForm = BaseForm,
+                PastSimple = PastSimple,
+                PastParticiple = PastParticiple
+            };
+
+            return submit;
         }
 
         public Result MakeResultObject(DateTime? TimeStamp, int? NumberofCorrectAnswers, int? NumberofIncorrectAnswers, int? Accuracy)
@@ -163,22 +197,6 @@ namespace IrregularVerbs.Models
 
             return incorrect;
         }
-
-        // Get Wrong Answers
-        public List<IncorrectForm> GetIncorrectSubmissions()
-        {
-            var data = (from x in _context.Incorrects
-                        select new IncorrectForm
-                        {
-                            TimeStamp = x.TimeStamp,
-                            GivenVerb = x.GivenVerb,
-                            CorrectAnswerFirst = x.CorrectAnswerFirst,
-                            CorrectAnswerSecond = x.CorrectAnswerSecond,
-                            SubmittedAnswerFirst = x.SubmittedAnswerFirst,
-                            SubmittedAnswerSecond = x.SubmittedAnswerSecond,
-                            Checked = x.Checked
-                        }).ToList();
-            return data;
-        }
+        #endregion
     }
 }
