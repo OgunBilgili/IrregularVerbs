@@ -119,6 +119,7 @@ namespace IrregularVerbs.Controllers
             return View(formData);
         }
 
+        // Get All Results
         public IActionResult ResultPage()
         {
             var data = _verbRepository.GetResults();
@@ -126,6 +127,20 @@ namespace IrregularVerbs.Controllers
             ResultForm formData = new ResultForm()
             {
                 ResultFormList = data
+            };
+
+            return View(formData);
+        }
+
+        //Get a Specific Result
+        [HttpPost]
+        public IActionResult SpecificResultPage(DateTime TimeStamp)
+        {
+            var data = _verbRepository.GetSpecificResult(TimeStamp);
+
+            IncorrectForm formData = new IncorrectForm()
+            {
+                IncorrectFormList = data
             };
 
             return View(formData);

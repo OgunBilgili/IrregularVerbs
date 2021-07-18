@@ -15,5 +15,6 @@ namespace IrregularVerbs.Models
         public Incorrect MakeIncorrectObject(DateTime? TimeStamp, int Checked, string givenVerb, string submittedAnswerFirst, 
                                             string submittedAnswerSecond, string correctAnswerFirst, string correctAnswerSecond);
         public List<ResultForm> GetResults();
+        public List<IncorrectForm> GetSpecificResult(DateTime TimeStamp);
     }
 }

@@ -13,13 +13,13 @@
     <!-- Initialize Data Table Below-->
     <script>
         $(document).ready(function () {
-            $('#IncorrectTable').DataTable();
+            $('#SpecificIncorrectTable').DataTable();
         });
     </script>
 </head>
 <body>
 
-    <table id="IncorrectTable" class="table table-striped" style="width:100%">
+    <table id="SpecificIncorrectTable" class="table table-striped" style="width:100%">
         <thead>
             <tr>
                 <th>TimeStamp</th>
@@ -28,7 +28,6 @@
                 <th>CorrectAnswerSecond</th>
                 <th>SubmittedAnswerFirst</th>
                 <th>SubmittedAnswerSecond</th>
-                <th>Checked</th>
                 <th style="display:none;"></th>
             </tr>
         </thead>
@@ -42,7 +41,6 @@
                     <td id="CorrectAnswerSecond">@d.CorrectAnswerSecond</td>
                     <td id="SubmittedAnswerFirst">@d.SubmittedAnswerFirst</td>
                     <td id="SubmittedAnswerSecond">@d.SubmittedAnswerSecond</td>
-                    <td id="Checked">@d.Checked</td>
                     <td style="display:none;"></td>
                 </tr>
             }
@@ -51,6 +49,3 @@
 
 </body>
 </html>
-
-
-

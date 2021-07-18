@@ -153,6 +153,24 @@ namespace IrregularVerbs.Models
         }
         #endregion
 
+        #region GET SPECIFIC RESULT
+        public List<IncorrectForm> GetSpecificResult(DateTime TimeStamp)
+        {
+            var data = (from x in _context.Incorrects where x.TimeStamp == TimeStamp
+                        select new IncorrectForm
+                        {
+                            TimeStamp = x.TimeStamp,
+                            GivenVerb = x.GivenVerb,
+                            CorrectAnswerFirst = x.CorrectAnswerFirst,
+                            CorrectAnswerSecond = x.CorrectAnswerSecond,
+                            SubmittedAnswerFirst = x.SubmittedAnswerFirst,
+                            SubmittedAnswerSecond = x.SubmittedAnswerSecond,
+                        }).ToList();
+            return data;
+        }
+
+        #endregion
+
         #region HELPER METHODS
         public SubmitForm fillSubmission(int VerbsLeft, string GivenVerbType, string BaseForm, string PastSimple, string PastParticiple)
         {

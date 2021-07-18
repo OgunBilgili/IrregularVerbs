@@ -15,10 +15,21 @@
     <script>
         $(document).ready(function () {
             var table = $('#ResultsTable').DataTable();
-
+            
             $('#ResultsTable tbody').on('click', 'tr', function () {
+                
                 var data = table.row(this).data();
                 alert('You clicked on ' + data[0] + '\'s row');
+                var TimeStamp = data[0];
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Home", "SpecificResultPage")',
+                    data: { TimeStamp: TimeStamp },
+                        success: function () {
+
+                        }
+                });
+
             });
         });
     </script>
@@ -39,10 +50,10 @@
             @foreach (var d in Model.ResultFormList)
             {
                 <tr>
-                    <td id="Numara">@d.TimeStamp</td>
+                    <td id="TimeStamp">@d.TimeStamp</td>
                     <td>@d.NumberofCorrectAnswers</td>
-                    <td id="İsim">@d.NumberofIncorrectAnswers</td>
-                    <td id="Soyisim">%@d.Accuracy</td>
+                    <td id="NumberofIncorrectAnswers">@d.NumberofIncorrectAnswers</td>
+                    <td id="Accuracy">%@d.Accuracy</td>
                     <td style="display:none;"></td>
                 </tr>
             }
