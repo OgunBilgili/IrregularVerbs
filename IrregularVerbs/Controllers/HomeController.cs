@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -82,8 +83,8 @@ namespace IrregularVerbs.Controllers
             }
 
             verbsLeft = max - selectedVerbs.Count();
-
-            var verb = _verbRepository.GetVerb(_context.Irregulars.Find(selected), verbsLeft);
+            var selectedVerb = _context.Irregulars.Find(selected);
+            var verb = _verbRepository.GetVerb(selectedVerb, verbsLeft);
 
             return View(verb);
         }
@@ -132,9 +133,8 @@ namespace IrregularVerbs.Controllers
             return View(formData);
         }
 
-        //Get a Specific Result
         [HttpPost]
-        public IActionResult SpecificResultPage(DateTime TimeStamp)
+        public JsonResult getSpecificIncorrects(DateTime TimeStamp)
         {
             var data = _verbRepository.GetSpecificResult(TimeStamp);
 
@@ -142,6 +142,16 @@ namespace IrregularVerbs.Controllers
             {
                 IncorrectFormList = data
             };
+
+            string jsonString = JsonConvert.SerializeObject(formData);
+           
+            return Json(jsonString);
+        }
+
+        //Get a Specific Result
+        public IActionResult SpecificResultPage(string data)
+        {
+            var formData = JsonConvert.DeserializeObject<IncorrectForm>(data);
 
             return View(formData);
         }

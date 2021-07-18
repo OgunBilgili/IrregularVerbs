@@ -19,15 +19,17 @@
             $('#ResultsTable tbody').on('click', 'tr', function () {
                 
                 var data = table.row(this).data();
-                alert('You clicked on ' + data[0] + '\'s row');
+                
                 var TimeStamp = data[0];
                 $.ajax({
                     type: "POST",
-                    url: '@Url.Action("Home", "SpecificResultPage")',
+                    url: "/home/getSpecificIncorrects",
                     data: { TimeStamp: TimeStamp },
-                        success: function () {
-
-                        }
+                    success: function (data) {
+                        //alert('You clicked on ' + TimeStamp + '\'s row'); SpecificResultPage
+                        //console.log(data);
+                        window.location.href = "/home/SpecificResultPage?data=" + data;
+                    }   
                 });
 
             });
@@ -59,6 +61,8 @@
             }
         </tbody>
     </table>
+
+    <h1>RTCY ADAMDIR</h1>
 </body>
     
 </html>
