@@ -10,8 +10,10 @@ Ultimately I will have worked on project to make it more efficient.
 - ***Basic Entity Framework Core Request***
 - ***Select Random Entity form Database***
 
-To request essential part of a project or point an opinion out:
+[Database Backup.zip](https://github.com/OgunBilgili/IrregularVerbs/files/6851150/Database.Backup.zip)
+
 Feel free to contact: ogunbilgili@gmail.com 
 (Secondary e-mail: ogunbilgili@hotmail.com)
+
 
 
