@@ -15,21 +15,20 @@
     <script>
         $(document).ready(function () {
             var table = $('#ResultsTable').DataTable();
-            
+
             $('#ResultsTable tbody').on('click', 'tr', function () {
-                
+
                 var data = table.row(this).data();
-                
+
                 var TimeStamp = data[0];
+
                 $.ajax({
                     type: "POST",
                     url: "/home/getSpecificIncorrects",
                     data: { TimeStamp: TimeStamp },
                     success: function (data) {
-                        //alert('You clicked on ' + TimeStamp + '\'s row'); SpecificResultPage
-                        //console.log(data);
-                        window.location.href = "/home/SpecificResultPage?data=" + data;
-                    }   
+                        window.location.href = "/home/SpecificResultPage";
+                    }
                 });
 
             });
@@ -38,6 +37,7 @@
 </head>
 
 <body>
+
     <table id="ResultsTable" class="table table-striped" style="width:100%">
         <thead>
             <tr>
@@ -62,7 +62,6 @@
         </tbody>
     </table>
 
-    <h1>RTCY ADAMDIR</h1>
 </body>
     
 </html>

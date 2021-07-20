@@ -21,6 +21,7 @@ namespace IrregularVerbs.Controllers
         private readonly IVerbRepository _verbRepository;
         private readonly IrregularVerbsContext _context;
         private static List<int> selectedVerbs = new List<int>();
+        private static List<IncorrectForm> incorrectForms = new List<IncorrectForm>();
         private int verbsLeft;
         private static Random random = new Random();
 
@@ -137,31 +138,20 @@ namespace IrregularVerbs.Controllers
         public JsonResult getSpecificIncorrects(DateTime TimeStamp)
         {
             var data = _verbRepository.GetSpecificResult(TimeStamp);
+            incorrectForms = data;
 
-            IncorrectForm formData = new IncorrectForm()
-            {
-                IncorrectFormList = data
-            };
-
-            string jsonString = JsonConvert.SerializeObject(formData);
-           
-            return Json(jsonString);
+            return Json("True");
         }
 
         //Get a Specific Result
-        public IActionResult SpecificResultPage(string data)
+        public IActionResult SpecificResultPage()
         {
-            var formData = JsonConvert.DeserializeObject<IncorrectForm>(data);
+            IncorrectForm formData = new IncorrectForm()
+            {
+                IncorrectFormList = incorrectForms
+            };
 
             return View(formData);
         }
     }
 }
-
-/*
-    To-Do List
-
-    Result Page -> If clicked : go to incorrect page but distinct the result by TimeStamp
-    
-
-*/
