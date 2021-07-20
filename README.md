@@ -10,7 +10,7 @@ Ultimately I will have worked on project to make it more efficient.
 - ***Basic Entity Framework Core Request***
 - ***Select Random Entity form Database***
 
-[Database Backup.zip](https://github.com/OgunBilgili/IrregularVerbs/files/6851150/Database.Backup.zip)
+[Database Backup](https://github.com/OgunBilgili/IrregularVerbs/files/6851150/Database.Backup.zip)
 
 Feel free to contact: ogunbilgili@gmail.com 
 (Secondary e-mail: ogunbilgili@hotmail.com)
