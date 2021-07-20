@@ -10,7 +10,7 @@ Ultimately I will have worked on project to make it more efficient.
 - ***Basic Entity Framework Core Request***
 - ***Select Random Entity form Database***
 
-
+To request essential part of a project or point an opinion out:
 Feel free to contact: ogunbilgili@gmail.com 
 (Secondary e-mail: ogunbilgili@hotmail.com)
 
